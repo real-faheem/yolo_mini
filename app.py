@@ -1,12 +1,10 @@
 import streamlit as st
-import cv2
 import torch
 from PIL import Image
 import numpy as np
 
 st.set_page_config(page_title="Vehicle Number Plate Detection", layout="centered")
 
-# Description Section
 with st.sidebar:
     st.title("Faheem - Developer")
     with st.expander("About Project"):
@@ -27,7 +25,6 @@ with st.sidebar:
     st.markdown("- Phone: +91 9360609439")
     st.markdown('[🔗 LinkedIn](https://www.linkedin.com/in/md-faheem-mn/)', unsafe_allow_html=True)
 
-# Model loader
 @st.cache_resource
 def load_model():
     from ultralytics import YOLO
@@ -41,11 +38,9 @@ def detect(image):
     result_img = results[0].plot()
     return result_img
 
-# Input Option
 st.title("Vehicle Number Plate Detection with YOLOv11")
 option = st.radio("Select input source:", ['Upload Image', 'Use Webcam'])
 
-# Upload Image Mode
 if option == 'Upload Image':
     uploaded_file = st.file_uploader("Upload an image file", type=['jpg','jpeg','png'])
     if uploaded_file:
@@ -54,7 +49,6 @@ if option == 'Upload Image':
         result_img = detect(img_array)
         st.image(result_img, caption="Detected Number Plates", use_column_width=True)
 
-# Webcam Mode (Mobile + Laptop supported)
 else:
     st.info("Use camera input below. Works on both mobile and laptop.")
     cam_input = st.camera_input("Take a picture")
