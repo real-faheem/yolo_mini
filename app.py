@@ -24,7 +24,7 @@ with st.sidebar:
         """)
     
     st.markdown("### 📬 Ping Me!!!")
-    st.markdown('[ 📧 faheemhaker@gmail.com](https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSDZNwkhMdbDQPvggcBfLJZmPQnkMpfqmQVXdxCkgKHzPNvwVfcQTwZFhSDKRNWlQmBNnPFB)',  unsafe_allow_html=True
+    st.markdown('[ 📧 faheemhaker@gmail.com](https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSDZNwkhMdbDQPvggcBfLJZmPQnkMpfqmQVXdxCkgKHzPNvwVfcQTwZFhSDKRNWlQmBNnPFB)',  unsafe_allow_html=True )
     st.markdown('[🔗 LinkedIn](https://www.linkedin.com/in/md-faheem-mn/)', unsafe_allow_html=True)
 
 # Model loader
