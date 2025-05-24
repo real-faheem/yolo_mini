@@ -23,8 +23,8 @@ with st.sidebar:
         **Higher the efficiency → Lower the setup process.**
         """)
     
-    st.markdown("### 📞 Contact")
-    st.markdown("- Phone: +91 9360609439")
+    st.markdown("### 📬 Contact")
+    st.markdown('[📧 Gmail](mailto:faheemhaker@gmail.com)')
     st.markdown('[🔗 LinkedIn](https://www.linkedin.com/in/md-faheem-mn/)', unsafe_allow_html=True)
 
 # Model loader
