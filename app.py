@@ -35,29 +35,16 @@ else:
     frame_window = st.image([])
 
     if run:
-        # Try multiple device indices to open webcam
-        cap = None
-        for i in range(4):
-            cap = cv2.VideoCapture(i)
-            if cap.isOpened():
-                break
-            else:
-                cap.release()
-                cap = None
-        if cap is None:
-            st.write("Failed to access webcam on any index.")
+        # Instead of cv2.VideoCapture, use Streamlit's experimental camera_input widget for better compatibility
+        cam_file = st.camera_input("Use your camera to capture live video")
+        if cam_file is not None:
+            bytes_data = cam_file.getvalue()
+            np_arr = np.frombuffer(bytes_data, np.uint8)
+            frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results_img = detect(img)
+            frame_window.image(results_img)
         else:
-            while run:
-                ret, frame = cap.read()
-                if not ret:
-                    st.write("Failed to read frame from webcam")
-                    break
-                img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                results_img = detect(img)
-                frame_window.image(results_img)
-                # Allow stopping webcam by unchecking checkbox
-                run = st.checkbox("Start Webcam", value=True)
-                time.sleep(0.03)  # small delay to reduce CPU load
-            cap.release()
+            st.write("Please allow camera access.")
     else:
         st.write("Webcam stopped.")
