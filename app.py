@@ -55,21 +55,29 @@ if option == 'Upload Image':
 else:
     run = st.checkbox("Start Webcam")
     frame_window = st.image([])
-    cap = None
 
     if run:
-        if cap is None:
-            cap = cv2.VideoCapture(0)
-        while run:
-            ret, frame = cap.read()
-            if not ret:
-                st.write("Failed to access webcam")
+        # Try multiple device indices for webcam
+        cap = None
+        for i in range(4):
+            cap = cv2.VideoCapture(i)
+            if cap.isOpened():
                 break
-            img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results_img = detect(img)
-            frame_window.image(results_img)
-            run = st.checkbox("Start Webcam", value=True)
-        cap.release()
-    else:
-        if cap is not None:
+            else:
+                cap.release()
+                cap = None
+        if cap is None:
+            st.write("Failed to access webcam on any index.")
+        else:
+            while run:
+                ret, frame = cap.read()
+                if not ret:
+                    st.write("Failed to read frame from webcam")
+                    break
+                img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                results_img = detect(img)
+                frame_window.image(results_img)
+                run = st.checkbox("Start Webcam", value=True)
             cap.release()
+    else:
+        st.write("Webcam stopped.")
