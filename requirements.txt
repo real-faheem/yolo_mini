@@ -1,15 +1,6 @@
-<<<<<<< HEAD
 streamlit
 torch
 opencv-python-headless
 Pillow
 numpy
 ultralytics
-=======
-streamlit
-torch
-opencv-python
-Pillow
-numpy
-ultralytics
->>>>>>> 043eb16 (Fix OpenCV import error for Streamlit deployment)
