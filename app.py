@@ -24,7 +24,7 @@ with st.sidebar:
         """)
     
     st.markdown("### 📬 Contact")
-    st.markdown('[📧 faheemhaker@gmail.com]')
+    st.markdown("📧 faheemhaker@gmail.com")
     st.markdown('[🔗 LinkedIn](https://www.linkedin.com/in/md-faheem-mn/)', unsafe_allow_html=True)
 
 # Model loader
