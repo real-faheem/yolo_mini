@@ -3,12 +3,31 @@ import cv2
 import torch
 from PIL import Image
 import numpy as np
-import time
 
-st.title("Vehicle Number Plate Detection with YOLOv11")
+st.set_page_config(page_title="Vehicle Number Plate Detection", layout="centered")
 
-option = st.radio("Select input source:", ['Upload Image', 'Use Webcam'])
+# Description Section
+with st.sidebar:
+    st.title("Faheem - Developer")
+    with st.expander("About Project"):
+        st.markdown("""
+        Hi! Glad you intended to find the description about my project...
 
+        **This project is about**: "Detection and identification of Number Plate"  
+        **Domain**: OBJECT DETECTION AND IDENTIFICATION LEVERAGING YOLOV11.
+
+        The need for developing a machine learning project which uses **YOLOV11** to detect object-number plate is for the improvement of efficiency.  
+        It can surpass existing algorithms like **CNN, RCNN**, etc., by up to **82%**.
+
+        Through implementing this on surveillance cameras, **security can be enhanced** further.  
+        **Higher the efficiency → Lower the setup process.**
+        """)
+    
+    st.markdown("### 📞 Contact")
+    st.markdown("- Phone: +91 9360609439")
+    st.markdown('[🔗 LinkedIn](https://www.linkedin.com/in/md-faheem-mn/)', unsafe_allow_html=True)
+
+# Model loader
 @st.cache_resource
 def load_model():
     from ultralytics import YOLO
@@ -22,29 +41,25 @@ def detect(image):
     result_img = results[0].plot()
     return result_img
 
+# Input Option
+st.title("Vehicle Number Plate Detection with YOLOv11")
+option = st.radio("Select input source:", ['Upload Image', 'Use Webcam'])
+
+# Upload Image Mode
 if option == 'Upload Image':
-    uploaded_file = st.file_uploader("Upload an image file (jpg/png/jpeg)", type=['jpg','jpeg','png'])
-    if uploaded_file is not None:
+    uploaded_file = st.file_uploader("Upload an image file", type=['jpg','jpeg','png'])
+    if uploaded_file:
         image = Image.open(uploaded_file).convert('RGB')
         img_array = np.array(image)
-        results_img = detect(img_array)
-        st.image(results_img, caption="Detected Number Plates")
+        result_img = detect(img_array)
+        st.image(result_img, caption="Detected Number Plates", use_column_width=True)
 
+# Webcam Mode (Mobile + Laptop supported)
 else:
-    run = st.checkbox("Start Webcam")
-    frame_window = st.image([])
-
-    if run:
-        # Instead of cv2.VideoCapture, use Streamlit's experimental camera_input widget for better compatibility
-        cam_file = st.camera_input("Use your camera to capture live video")
-        if cam_file is not None:
-            bytes_data = cam_file.getvalue()
-            np_arr = np.frombuffer(bytes_data, np.uint8)
-            frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-            img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results_img = detect(img)
-            frame_window.image(results_img)
-        else:
-            st.write("Please allow camera access.")
-    else:
-        st.write("Webcam stopped.")
+    st.info("Use camera input below. Works on both mobile and laptop.")
+    cam_input = st.camera_input("Take a picture")
+    if cam_input:
+        image = Image.open(cam_input).convert('RGB')
+        img_array = np.array(image)
+        result_img = detect(img_array)
+        st.image(result_img, caption="Detected Number Plates", use_column_width=True)
