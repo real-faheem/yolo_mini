@@ -1,0 +1,6 @@
+train: C:\Users\mdfah\OneDrive\Documents\yolo_mini\train
+val: C:\Users\mdfah\OneDrive\Documents\yolo_mini\val
+
+nc: 2
+
+names: ["pvt car","taxi"]
