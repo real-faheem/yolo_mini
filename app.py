@@ -52,7 +52,7 @@ if option == 'Upload Image':
         image = Image.open(uploaded_file).convert('RGB')
         img_array = np.array(image)
         result_img = detect(img_array)
-        st.image(result_img, caption="Detected Number Plates", use_column_width=True)
+        st.image(result_img, caption="Detected Number Plates", use_container_width=True)
 
 # Webcam Mode (Mobile + Laptop supported)
 else:
@@ -62,4 +62,4 @@ else:
         image = Image.open(cam_input).convert('RGB')
         img_array = np.array(image)
         result_img = detect(img_array)
-        st.image(result_img, caption="Detected Number Plates", use_column_width=True)
+        st.image(result_img, caption="Detected Number Plates", use_container_width=True)
