@@ -3,7 +3,7 @@ import cv2
 import torch
 from PIL import Image
 import numpy as np
-import webbrowser
+import time
 
 st.title("Vehicle Number Plate Detection with YOLOv11")
 
@@ -22,28 +22,6 @@ def detect(image):
     result_img = results[0].plot()
     return result_img
 
-if st.button("About Me"):
-    with st.expander("Faheem - Developer"):
-        st.write(
-            """
-            Hi! Glad you intended to find the description about my project...
-            This project is about **Detection and identification of Number Plate** under the domain of 
-            **OBJECT DETECTION AND IDENTIFICATION LEVERAGING YOLOV11**.
-
-            The need for developing a machine learning project which uses YOLOV11 to detect object-number plate
-            is for the improvement of efficiency in which it can surpass the existing algorithms like CNN, RCNN etc, 
-            up to 82%. Through implementing this on surveillance camera the security can be enhanced further,
-            higher the efficiency - lower the setup process.
-            """
-        )
-
-st.markdown("### Contacts")
-phone = "9360609439"
-linkedin_url = "https://www.linkedin.com/in/md-faheem-mn/"
-st.markdown(f"- Phone: {phone}")
-if st.button("LinkedIn Profile"):
-    webbrowser.open_new_tab(linkedin_url)
-
 if option == 'Upload Image':
     uploaded_file = st.file_uploader("Upload an image file (jpg/png/jpeg)", type=['jpg','jpeg','png'])
     if uploaded_file is not None:
@@ -57,7 +35,7 @@ else:
     frame_window = st.image([])
 
     if run:
-        # Try multiple device indices for webcam
+        # Try multiple device indices to open webcam
         cap = None
         for i in range(4):
             cap = cv2.VideoCapture(i)
@@ -77,7 +55,9 @@ else:
                 img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results_img = detect(img)
                 frame_window.image(results_img)
+                # Allow stopping webcam by unchecking checkbox
                 run = st.checkbox("Start Webcam", value=True)
+                time.sleep(0.03)  # small delay to reduce CPU load
             cap.release()
     else:
         st.write("Webcam stopped.")
